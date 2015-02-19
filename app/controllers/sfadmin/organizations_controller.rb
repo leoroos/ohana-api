@@ -18,14 +18,8 @@ module Sfadmin
     end
 
     def update
-      if(@organization.update(organization_params))
-        render :edit
-      else
-        render(
-          status: :unprocessable_entity,
-          json: @organization.errors.full_messages,
-        )
-      end
+      @organization.update(organization_params)
+      render :show
     end
 
     private

@@ -16,20 +16,8 @@
 
       <%= form.input :name %>
       <%= form.input :urls, as: :array %>
-      <a href="#" onclick="add_field()">Add URL</a>
-      <script>
-        function add_field()
-        {
-          var form = $('.input.organization_urls')[0],
-          input = document.createElement('input');
-          input.setAttribute('class', 'text optional');
-          input.setAttribute('id', 'organization_');
-          input.setAttribute('name', 'organization[urls][]');
-          input.setAttribute('type', 'text');
-          form.appendChild(input);
-        };
-      </script>
       <%= form.submit %>
+    <% end %>
 
       <h2 class="sub-header"><%= Location.model_name.human.pluralize %></h2>
       <% @organization.locations.includes(:services).each do |location| %>
@@ -58,6 +46,5 @@
           <% end %>
         </div>
       <% end %>
-    <% end %>
   </div>
 </div>

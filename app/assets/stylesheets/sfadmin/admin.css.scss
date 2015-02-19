@@ -1,8 +1,8 @@
 @import 'bootstrap';
-@import 'rails_bootstrap_forms';
-@import 'dashboard';
-@import 'bourbon';
-@import 'neat';
+@import "rails_bootstrap_forms";
+@import "dashboard";
+@import "bourbon";
+@import "neat";
 
 body {
   padding-top: 60px;
@@ -11,29 +11,55 @@ body {
 .outer-container {
   @include outer-container;
 
-  .organization-form {
-    @include span-columns(9 of 12);
-
-    h1 {
-      margin-bottom: $gutter;
-    }
-    .input {
-      @include fill-parent;
-      margin-bottom: $gutter;
-      overflow: hidden;
-
-      label {
-        @include span-columns(3 of 9);
-        text-align: right;
-      }
-      textarea {
-        @include span-columns(6 of 9);
-      }
-    }
-  }
-
   .organization-sidebar {
     @include span-columns(3 of 12);
+  }
+
+  .organization-form {
+    @include span-columns(9 of 12);
+  }
+}
+
+.organization-form {
+  h1 {
+    margin-bottom: $gutter;
+  }
+
+  form {
+    overflow: hidden;
+  }
+
+  .input {
+    @include fill-parent;
+    margin-bottom: $gutter;
+    overflow: hidden;
+  }
+
+  label {
+    @include span-columns(2 of 9);
+    text-align: right;
+  }
+
+  textarea,
+  .array-input {
+    @include span-columns(7 of 9);
+  }
+
+  .array-element {
+    @include fill-parent;
+    margin-bottom: $gutter/2;
+  }
+
+  [type="submit"] {
+    @include shift(2);
+    @include span-columns(5 of 9);
+    background-color: #428bca;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1.4em;
+    padding: $gutter/2;
+    &:hover { background-color: #2a6496; }
   }
 }
 
