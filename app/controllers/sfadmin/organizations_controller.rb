@@ -19,7 +19,7 @@ module Sfadmin
 
     def update
       if(@organization.update(organization_params))
-        respond_with :@organization
+        render :edit
       else
         render(
           status: :unprocessable_entity,
