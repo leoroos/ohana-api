@@ -31,7 +31,7 @@ module Sfadmin
     private
 
     def organization_params
-      params.require(:organization).permit(:name)
+      params.require(:organization).permit(:name, urls: [])
     end
 
     def load_organization
