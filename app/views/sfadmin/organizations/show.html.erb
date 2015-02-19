@@ -1,37 +1,52 @@
 <% content_for :title, @organization.name %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <%= aasm_validation_errors_for(@organization) %>
-      <%= render @organization %>
-      <h2 class="sub-header"><%= Location.model_name.human.pluralize %></h2>
-      <% @organization.locations.includes(:services).each do |location| %>
-        <div class="panel panel-default">
+<div class="outer-container">
+  <%= render 'organization_sidebar', organization: @organization %>
 
+  <%#This page just shows the top-level organization fields %>
+
+  <div class="organization-form">
+    <%= aasm_validation_errors_for(@organization) %>
+
+    <h1><%= @organization.name %></h1>
+
+    <dt><%= Organization.human_attribute_name :urls %></dt>
+    <dd>
+      <ul class="list-unstyled">
+        <% @organization.urls.each do |url| %>
+          <li><%= link_to url, url %></li>
+        <% end %>
+      </ul>
+    </dd>
+    <dt>Last Updated</dt>
+    <dd><%= l @organization.updated_at %></dd>
+
+    <h2 class="sub-header"><%= Location.model_name.human.pluralize %></h2>
+    <% @organization.locations.includes(:services).each do |location| %>
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= location.name %>
+          </h3>
+        </div>
+
+        <div class="panel-body">
+          <%= aasm_validation_errors_for(location) %>
+          <%= render location %>
+        </div>
+
+        <% location.services.each do |service| %>
           <div class="panel-heading">
-            <h3 class="panel-title">
-              <%= location.name %>
-            </h3>
+            <%= service.name %>
           </div>
 
           <div class="panel-body">
-            <%= aasm_validation_errors_for(location) %>
-            <%= render location %>
+            <%= aasm_validation_errors_for(service) %>
+            <%= render service %>
           </div>
-
-          <% location.services.each do |service| %>
-            <div class="panel-heading">
-              <%= service.name %>
-            </div>
-
-            <div class="panel-body">
-              <%= aasm_validation_errors_for(service) %>
-              <%= render service %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

@@ -1,9 +1,21 @@
 @import 'bootstrap';
 @import 'rails_bootstrap_forms';
 @import 'dashboard';
+@import 'bourbon';
+@import 'neat';
 
 body {
   padding-top: 60px;
+}
+
+.outer-container {
+  @include outer-container;
+  .organization-sidebar {
+    @include span-columns(3 of 12);
+  }
+  .organization-form {
+    @include span-columns(9 of 12);
+  }
 }
 
 .label-finished-job {
