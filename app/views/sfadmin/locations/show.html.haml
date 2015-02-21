@@ -4,7 +4,51 @@
   = render 'sfadmin/organizations/organization_sidebar', organization: @location.organization
 
   .organization-form
-    %h1 Hello!
     = simple_form_for([:sfadmin, @location.organization, @location]) do |form|
-      %h1= "Edit Location: #{@location.name}"
+      %h1= @location.name
+
+      =# map_for(@location) TODO
+
+      = aasm_validation_errors_for(@location)
+
+      = form.input :name
+      = form.input :short_desc
+      = form.input :description
+      = form.input :hours
+      = form.input :transportation
+      = form.input :urls, as: :array
+      = form.input :emails, as: :array
+      = form.input :admin_emails, as: :array
+      = form.input :languages, as: :array
+      = form.input :accessibility, as: :check_boxes
+
+      %dt= Location.human_attribute_name :address
+      %dd
+        - if @location.address
+          = render partial: 'sfadmin/addresses/address', locals: { address: @location.address }
+      %dt= Location.human_attribute_name :contacts
+      %dd
+        %ul
+          - @location.contacts.each do |contact|
+            %li= render partial: 'sfadmin/contacts/contact', locals: { contact: contact }
+      %dt= Location.human_attribute_name :faxes
+      %dd
+        %ul
+          - @location.faxes.each do |fax|
+            %li= render partial: 'sfadmin/faxes/fax', locals: { fax: fax }
+      %dt= Location.human_attribute_name :mail_address
+      %dd
+        - if @location.mail_address
+          = render partial: 'sfadmin/mail_addresses/mail_address', locals: { mail_address: @location.mail_address }
+      %dt= Location.human_attribute_name :phones
+      %dd
+        %ul
+          - @location.phones.each do |phone|
+            %li= render partial: 'sfadmin/phones/phone', locals: { phone: phone }
+
+      - @location.services.each do |service|
+        = service.name
+        = aasm_validation_errors_for(service)
+        = render service
+
       = form.submit

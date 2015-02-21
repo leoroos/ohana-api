@@ -4,6 +4,14 @@
 @import "bourbon";
 @import "neat";
 
+// bootstrap overrides
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  margin-left: 0;
+}
+
 body {
   padding-top: 60px;
 }
@@ -41,13 +49,23 @@ body {
   }
 
   textarea,
-  .array-input {
+  .array-input,
+  .collection-select {
     @include span-columns(7 of 9);
+    overflow: none;
   }
 
-  .array-element {
+  .array-element,
+  .checkbox {
     @include fill-parent;
     margin-bottom: $gutter/2;
+    margin-top: 0;
+    overflow: hidden;
+  }
+
+  .collection_check_boxes {
+    @include fill-parent;
+    text-align: left;
   }
 
   [type="submit"] {
