@@ -1,0 +1,9 @@
+.organization-sidebar
+  %h2= link_to organization.name, [:sfadmin, organization]
+
+  %h3 Locations
+  %ul.locations
+  - organization.locations.each do |location|
+    %li.location
+      = link_to(location.name,
+        [:sfadmin, location.organization, location])

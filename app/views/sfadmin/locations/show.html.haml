@@ -1,0 +1,10 @@
+- content_for :title, @location.organization.name
+
+.outer-container
+  = render 'sfadmin/organizations/organization_sidebar', organization: @location.organization
+
+  .organization-form
+    %h1 Hello!
+    = simple_form_for([:sfadmin, @location.organization, @location]) do |form|
+      %h1= "Edit Location: #{@location.name}"
+      = form.submit
