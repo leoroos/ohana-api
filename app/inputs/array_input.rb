@@ -1,6 +1,7 @@
 class ArrayInput < SimpleForm::Inputs::StringInput
   include ActionView::Helpers::TagHelper
   include ActionView::Context
+  include ActiveSupport::Inflector
 
   TEXT_FIELD_CLASSES = "text optional array-element"
 
@@ -37,7 +38,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
 
   def add_field_html
     <<-HTML.html_safe
-      <a href="#" onclick="add_field()" class="add">Add URL</a>
+      <a href="#" onclick="add_field()" class="add">#{add_text}</a>
       <script>
         function add_field(e)
         {
@@ -52,5 +53,13 @@ class ArrayInput < SimpleForm::Inputs::StringInput
         };
       </script>
     HTML
+  end
+
+  def add_text
+    singularize(
+      humanize(
+        "Add #{attribute_name}"
+      )
+    )
   end
 end
