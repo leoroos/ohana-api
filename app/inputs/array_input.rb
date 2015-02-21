@@ -4,7 +4,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
 
   TEXT_FIELD_CLASSES = "text optional array-element"
 
-  def input
+  def input(_wrapper_options)
     input_html_options[:type] ||= input_type
 
     content_tag(:div, class: "array-input") do
