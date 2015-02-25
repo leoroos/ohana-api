@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 ruby "2.1.5"
 
+gem "protected_attributes"
+
 gem "aasm"
 gem "active_model_serializers", "~> 0.8.0"
 gem "ancestry"
@@ -24,7 +26,6 @@ gem "passenger"
 gem "pg"
 gem "pg_search"
 gem "platform-api"
-gem "protected_attributes"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rails", "~> 4.1.1"
