@@ -51,6 +51,7 @@ class ArrayInput < SimpleForm::Inputs::StringInput
     input.setAttribute("type", "text");
     add_link = $(".input.#{model_name}_#{attribute_name} .add")[0];
     form.insertBefore(input, add_link);
+    input.focus();
   };
 </script>
     HTML
