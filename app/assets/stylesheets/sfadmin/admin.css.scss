@@ -17,7 +17,11 @@ body {
 }
 
 .outer-container {
+  $width: 1170px;
+
   @include outer-container;
+  max-width: $width;
+  width: $width;
 
   .organization-sidebar {
     @include span-columns(3 of 12);
