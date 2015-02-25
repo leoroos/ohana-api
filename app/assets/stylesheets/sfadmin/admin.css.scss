@@ -49,6 +49,11 @@ body {
   }
 
   textarea,
+  [type="text"] {
+    padding: $gutter/2;
+  }
+
+  textarea,
   .array-input,
   .collection-select {
     @include span-columns(7 of 9);
