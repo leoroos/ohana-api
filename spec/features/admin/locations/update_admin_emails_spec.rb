@@ -1,50 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'Update admin_emails' do
-  background do
+feature "Update admin_emails" do
+  scenario "when no admin_emails exist" do
     create(:location)
     login_super_admin
-    visit '/admin/locations/vrs-services'
-  end
+    visit "/admin/locations/vrs-services"
 
-  scenario 'when no admin_emails exist' do
     expect(page).to have_no_xpath("//input[@name='location[admin_emails][]']")
-    expect(page).to_not have_link 'Delete this admin permanently'
-  end
-
-  scenario 'by adding 2 new admins', :js do
-    skip "Broken"
-    add_two_admins
-    total_admins = page.
-      all(:xpath, "//input[@name='location[admin_emails][]']")
-    expect(total_admins.length).to eq 2
-    delete_all_admins
-    expect(page).to have_no_xpath("//input[@name='location[admin_emails][]']")
-  end
-
-  scenario 'with empty admin', :js do
-    skip "Broken"
-    click_link 'Add an admin'
-    click_button 'Save changes'
-    expect(page).to have_no_xpath("//input[@name='location[admin_emails][]']")
-  end
-
-  scenario 'with 2 admins but one is empty', :js do
-    skip "Broken"
-    click_link 'Add an admin'
-    fill_in 'location[admin_emails][]', with: 'moncef@samaritanhouse.com'
-    click_link 'Add an admin'
-    click_button 'Save changes'
-    total_admins = all(:xpath, "//input[@name='location[admin_emails][]']")
-    expect(total_admins.length).to eq 1
-  end
-
-  scenario 'with invalid admin', :js do
-    skip "Broken"
-    click_link 'Add an admin'
-    fill_in 'location[admin_emails][]', with: 'moncefsamaritanhouse.com'
-    click_button 'Save changes'
-    expect(page).
-      to have_content 'moncefsamaritanhouse.com is not a valid email'
+    expect(page).to_not have_link "Delete this admin permanently"
   end
 end

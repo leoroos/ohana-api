@@ -23,21 +23,6 @@ feature "Editing a location" do
     expect(page).to have_content("Foobar")
   end
 
-  scenario "adding a location URL", :js do
-    new_url = "http://foobar.com"
-    location = create(:location)
-    first_url_field = ".location_urls .array-element:first-child"
-
-    sign_in_as_admin
-    visit location_page(location)
-    click_on "Add url"
-    find(first_url_field).set(new_url)
-    click_on "Update Location"
-
-    url_field = find(first_url_field)
-    expect(url_field.value).to eq(new_url)
-  end
-
   scenario "checking accessibility boxes" do
     location = create(:location, accessibility: [])
 
