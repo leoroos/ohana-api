@@ -1,46 +1,22 @@
 #log
   %table.table.table-striped.table-bordered
-    - if @import_job.log
-      - JSON.parse(@import_job.log).each do |log|
-        %tr
-          %td= log['index']
-          - if log['id']
-            - org = Organization.find_by id: log['id']
-            %td
-              %span.label{ class: "label-#{org.aasm_state.dasherize}" }= t org.aasm_state
-            %td
-              %ul.list-unstyled
+    - @import_job.organizations.includes(:locations).each_with_index do |org, index|
+      %tr
+        %td= index
+        %td
+          %span.label{ class: "label-#{org.aasm_state.dasherize}" }= t org.aasm_state
+        %td
+          %ul.list-unstyled
+            %li
+              %p
+                %b= Organization.model_name.human
+                = link_to org.name, [ :sfadmin, org ]
+            %ul
+              - org.locations.each do |location|
                 %li
                   %p
-                    %b= Organization.model_name.human
-                    = link_to org.name, [ :sfadmin, org ]
-                - unless log['organization']['rejected'].empty?
-                  %p
-                    %b= t '.unrecognized_organization_attributes'
-                    = log['organization']['rejected'].join ', '
-                %ul
-                  - log['organization']['locations'].each do |loc|
-                    - unless loc.empty?
-                      - id = loc.delete('id')
-                      - unless id.nil?
-                        - location = Location.find_by id: id
-                        %li
-                          %p
-                            %b= Location.model_name.human
-                            = link_to location.name, [ :sfadmin, org, location ]
-                          - rejected = loc.delete('rejected')
-                          - unless rejected.nil?
-                            %p
-                              %b= t '.unrecognized_location_attributes'
-                              = rejected.join ', '
-                          - loc.each do |k, v|
-                            %p
-                              %b= t ".unrecognized_#{k}"
-                              = v['rejected'].join ', '
-          - else
-            %td{ colspan: 2 }
-              %b= t '.error'
-              = log['error']
+                    %b= Location.model_name.human
+                    = link_to location.name, [ :sfadmin, org, location ]
     - if @import_job.new_job? || @import_job.started_job?
       %tr
         %td{ colspan: 3 }

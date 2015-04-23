@@ -28,53 +28,23 @@ class ImportJob < ActiveRecord::Base
 
   def perform
     start_job!
-    tempfile = nil
+
     begin
-      tempfile = Tempfile.new(['data', File.extname(url)])
-      tempfile.binmode
-      tempfile.write open(url).read
-      tempfile.size # flushes IO buffer
-      tempfile.rewind
-      firstchar = tempfile.readchar
-      tempfile.rewind
-      if firstchar == '['
-        data = tempfile.read
-        records = JSON.parse(data)
-        i = 0
-        log = []
-        records.each do |record|
-          begin
-            org, rejected = save_record(record)
-            log << { index: i, id: org.id, organization: rejected }
-          rescue
-            log << { index: i, error: $!.to_s }
-          end
-          self.update_column :log, log.to_json
-          i += 1
-        end
-      else
-        i = 0
-        log = []
-        tempfile.each do |line|
-          begin
-            record = JSON.parse(line)
-            org, rejected = save_record(record)
-            log << { index: i, id: org.id, organization: rejected }
-          rescue
-            log << { index: i, error: $!.to_s }
-          end
-          self.update_column :log, log.to_json
-          i += 1
+      data = open(url).read
+      records = JSON.parse(data)
+      records.each_with_index do |record, index|
+        begin
+          org, rejected = save_record(record)
+          logger.info(
+            { index: index, id: org.id, organization: rejected }.to_json
+          )
+        rescue
+          logger.info({ index: index, error: $!.to_s }.to_json)
         end
       end
     rescue
       puts $!.backtrace
       puts $!
-    ensure
-      if tempfile
-        tempfile.close
-        tempfile.unlink
-      end
     end
     finish_job!
   end
@@ -101,7 +71,7 @@ class ImportJob < ActiveRecord::Base
           keys = []
           params.each do |k, v|
             keys << k unless sanitized.has_key?(k)
-          end        
+          end
           rejected[:locations] << { }
           rejected[:locations].last[:rejected] = keys unless keys.empty?
           [ :address, :contacts, :faxes, :mail_address, :phones, :services ].each do |klass|
@@ -125,7 +95,7 @@ class ImportJob < ActiveRecord::Base
                   end
                 end
                 rejected[:locations].last[key] = { rejected: keys } unless keys.empty?
-              end            
+              end
             end
           end
           location.save(validate: false)

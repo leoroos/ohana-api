@@ -6,8 +6,7 @@ feature "Uploading data" do
     sample_upload_json_file = Rails.root + "spec/fixtures/sample_upload.json"
     body = File.read(sample_upload_json_file)
 
-    stub_request(:get, data_url).
-      to_return(status: 200, body: body, headers: {})
+    stub_request(:get, data_url).to_return(status: 200, body: body)
 
     login_admin
     visit "/"

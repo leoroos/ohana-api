@@ -15,20 +15,19 @@ describe ImportJob do
   describe "#perform" do
     it "fetches data from a URL" do
       url = "http://example.com/"
-      stub_request(:get, url).
-        to_return(status: 200, body: "[]", headers: {})
+      stub_request(:get, url).to_return(status: 200, body: "[]")
 
       create(:import_job, url: url)
+
+      assert_requested(:get, url)
     end
 
     it "imports organizations" do
       url = "http://example.com/"
-      stub_request(:get, url).
-        to_return(status: 200, body: body.to_json, headers: {})
-
+      stub_request(:get, url).to_return(status: 200, body: body.to_json)
       job = create(:import_job, url: url)
 
-      imported_org_id = JSON.parse(job.log)[0]["id"]
+      imported_org_id = job.organizations.first.id
 
       expect(imported_org_id).to eq(Organization.last.id)
       expect(Organization.last.name).to eq org_name

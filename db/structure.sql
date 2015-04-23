@@ -391,8 +391,7 @@ CREATE TABLE import_jobs (
     url text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    aasm_state character varying(255) DEFAULT 'new_job'::character varying,
-    log text
+    aasm_state character varying(255) DEFAULT 'new_job'::character varying
 );
 
 
@@ -1363,4 +1362,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140814003420');
 INSERT INTO schema_migrations (version) VALUES ('20140814033341');
 
 INSERT INTO schema_migrations (version) VALUES ('20140821050120');
+
+INSERT INTO schema_migrations (version) VALUES ('20150430020554');
 
