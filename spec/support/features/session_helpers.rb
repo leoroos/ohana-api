@@ -21,42 +21,6 @@ module Features
       login_as(user, scope: :user)
     end
 
-    def sign_in(email, password)
-      visit '/users/sign_in'
-      within('#new_user') do
-        fill_in 'Email',    with: email
-        fill_in 'Password', with: password
-      end
-      click_button 'Sign in'
-    end
-
-    def sign_in_admin(email, password)
-      visit '/admin/sign_in'
-      within('#new_admin') do
-        fill_in 'admin_email',    with: email
-        fill_in 'admin_password', with: password
-      end
-      click_button 'Sign in'
-    end
-
-    def sign_up(name, email, password, confirmation)
-      visit '/users/sign_up'
-      fill_in 'user_name',                  with: name
-      fill_in 'user_email',                 with: email
-      fill_in 'user_password',              with: password
-      fill_in 'user_password_confirmation', with: confirmation
-      click_button 'Sign up'
-    end
-
-    def sign_up_admin(name, email, password, confirmation)
-      visit '/admin/sign_up'
-      fill_in 'admin_name',                  with: name
-      fill_in 'admin_email',                 with: email
-      fill_in 'admin_password',              with: password
-      fill_in 'admin_password_confirmation', with: confirmation
-      click_button 'Sign up'
-    end
-
     def create_api_app(name, main_url, callback_url)
       click_link 'Register new application'
       within('#new_api_application') do

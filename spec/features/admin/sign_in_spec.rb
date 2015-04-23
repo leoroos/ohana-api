@@ -48,7 +48,7 @@ feature "Signing in" do
   scenario "with invalid credentials" do
     sign_in_admin("hello@example.com", "wrongpassword")
 
-    expect(page).to have_content "Invalid email or password"
+    expect(page).to have_content t("devise.failure.invalid")
   end
 
   scenario "with an unconfirmed admin" do
@@ -58,5 +58,14 @@ feature "Signing in" do
 
     expect(page).
       to have_content(t("devise.failure.unconfirmed"))
+  end
+
+  def sign_in_admin(email, password)
+    visit "/admin/sign_in"
+    within("#new_admin") do
+      fill_in "admin_email", with: email
+      fill_in "admin_password", with: password
+    end
+    click_button "Sign in"
   end
 end
