@@ -36,14 +36,33 @@ describe ImportJob do
     it "imports locations for each organization" do
       url = "http://example.com/"
       languages = body[0][:locations][0][:languages]
-      stub_request(:get, url).
-        to_return(status: 200, body: body.to_json, headers: {})
+      stub_request(:get, url).to_return(status: 200, body: body.to_json)
 
       create(:import_job, url: url)
 
       imported_org = Organization.last
       expect(imported_org.name).to eq org_name
       expect(imported_org.locations.first.languages).to eq languages
+    end
+
+    it "does not create duplicate organizations (judged by name)" do
+      url = "http://example.com/"
+      stub_request(:get, url).to_return(status: 200, body: body.to_json)
+      create(:organization, name: org_name)
+
+      create(:import_job, url: url)
+
+      expect(Organization.count).to eq(1)
+    end
+
+    it "imports phone numbers for the organization" do
+      url = "http://example.com/"
+      stub_request(:get, url).to_return(status: 200, body: body.to_json)
+
+      create(:import_job, url: url)
+
+      imported_number = Organization.first.locations.first.phones.first.number
+      expect(imported_number).to eq("415 550-2210")
     end
   end
 
