@@ -12,6 +12,14 @@ module Sfadmin
 
       @organizations = @organizations.where(aasm_state: params[:filter]) unless params[:filter].blank?
       @organizations = @organizations.reorder(:name).page params[:page]
+
+      respond_to do |format|
+        format.html
+        format.csv do
+          response.headers["Content-Disposition"] =
+            "attachment; filename=\"#{filename}.csv\""
+        end
+      end
     end
 
     def show
@@ -23,6 +31,10 @@ module Sfadmin
     end
 
     private
+
+    def filename
+      "ohana_organizations_#{Time.current.to_date.to_s}"
+    end
 
     def organization_params
       params.require(:organization).permit(:name, urls: [])
