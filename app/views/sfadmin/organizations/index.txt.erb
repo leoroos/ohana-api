@@ -1,0 +1,44 @@
+<% Location.all.each do |loc| %>
+# <%= loc.organization.name %>
+
+<%= loc.description %>
+
+<% if loc.emails.any? %>
+## Emails:
+
+<% loc.emails.each do |email| %>
+- <%= email %>
+<% end %>
+<% end %>
+
+## Hours
+
+<%= loc.hours %>
+
+<% if loc.urls.any? %>
+## Online:
+
+<% loc.urls.each do |url| %>
+- <<%= url %>>
+<% end %>
+<% end %>
+
+<% if loc.languages.any? %>
+## Languages:
+
+<% loc.languages.each do |language| %>
+- <%= language %>
+<% end %>
+<% end %>
+
+<% if loc.accessibility.any? %>
+## Accessibility:
+
+<% loc.accessibility.each do |access| %>
+- <%= access %>
+<% end %>
+<% end %>
+
+<%= loc.name.to_s %>
+<%= loc.short_desc.to_s %>
+<% end %>

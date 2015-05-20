@@ -1,3 +1,5 @@
+require "tempfile"
+
 module Sfadmin
   class OrganizationsController < Sfadmin::AdminController
     before_action :load_organization, except: [:index]
@@ -18,6 +20,16 @@ module Sfadmin
         format.csv do
           response.headers["Content-Disposition"] =
             "attachment; filename=\"#{filename}.csv\""
+        end
+        format.txt do
+          template = File.read(Rails.root + "app/views/sfadmin/organizations/index.txt.erb")
+          markdown = ERB.new(template).result
+          file = "locations.md"
+          document = "locations.docx"
+          `rm #{document} #{file}`
+          File.write(file, markdown)
+          `pandoc -s -S #{file} --reference-docx template.docx -o #{document}`
+          send_file Rails.root + document
         end
       end
     end
