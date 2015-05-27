@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "Uploading data" do
   scenario "uploading a JSON file" do
-    data_url = "https://raw.githubusercontent.com/sfbrigade/sf-openreferral/master/ss4women/1_100.json"
+    data_url = "https://example.com/example.json"
     sample_upload_json_file = Rails.root + "spec/fixtures/sample_upload.json"
     body = File.read(sample_upload_json_file)
 
