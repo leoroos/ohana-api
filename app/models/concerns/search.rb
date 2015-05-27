@@ -62,12 +62,13 @@ module Search
     require 'exceptions'
 
     def text_search(params = {})
-      Location.has_language(params[:language]).
-              has_category(params[:category]).
-              belongs_to_org(params[:org_name]).
-              has_email(params[:email]).
-              is_near(params[:location], params[:lat_lng], params[:radius]).
-              has_keyword(params[:keyword])
+      Location.
+        has_language(params[:language]).
+        has_category(params[:category]).
+        belongs_to_org(params[:org_name]).
+        has_email(params[:email]).
+        is_near(params[:location], params[:lat_lng], params[:radius]).
+        has_keyword(params[:keyword])
     end
 
     def validated_radius(radius, custom_radius)

@@ -5,4 +5,4 @@ coffee_script:
 java_script:
   enabled: true
 ruby:
-  enabled: true
+    config_file: .ruby-style.yml

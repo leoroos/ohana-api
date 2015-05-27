@@ -180,57 +180,9 @@ describe 'GET /locations' do
       expect(json.first['services_url']).
         to eq(api_location_services_url(@location))
     end
-
-    xit 'displays mail_address when present' do
-      @location.create_mail_address!(attributes_for(:mail_address))
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-
-      serialized_mail_address =
-        {
-          'id'        => @location.mail_address.id,
-          'attention' => @location.mail_address.attention,
-          'street'    => @location.mail_address.street,
-          'city'      => @location.mail_address.city,
-          'state'     => @location.mail_address.state,
-          'zip'       => @location.mail_address.zip
-        }
-      expect(json.first['mail_address']).to eq(serialized_mail_address)
-    end
-
-    xit 'displays contacts when present' do
-      @location.contacts.create!(attributes_for(:contact))
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-
-      serialized_contacts =
-        [{
-          'id'    => @location.contacts.first.id,
-          'name'  => @location.contacts.first.name,
-          'title' => @location.contacts.first.title,
-          'phone' => nil,
-          'email' => nil,
-          'extension' => nil,
-          'fax'   => nil
-        }]
-      expect(json.first['contacts']).to eq(serialized_contacts)
-    end
-
-    xit 'displays faxes when present' do
-      @location.faxes.create!(attributes_for(:fax))
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-
-      serialized_faxes =
-        [{
-          'id'         => @location.faxes.first.id,
-          'number'     => @location.faxes.first.number,
-          'department' => @location.faxes.first.department
-        }]
-
-      expect(json.first['faxes']).to eq(serialized_faxes)
-    end
   end
 
   context 'with nil fields' do
-
     before(:all) do
       @loc = create(:loc_with_nil_fields)
     end
@@ -248,23 +200,6 @@ describe 'GET /locations' do
       end
     end
 
-    xit 'returns nil fields within Contacts' do
-      attrs = attributes_for(:contact)
-      @loc.contacts.create!(attrs)
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-      contact_keys = json.first['contacts'].first.keys
-      %w(phone fax email).each do |key|
-        expect(contact_keys).to include(key)
-      end
-    end
-
-    xit 'returns nil fields within Faxes' do
-      @loc.faxes.create!(attributes_for(:fax_with_no_dept))
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-      fax_keys = json.first['faxes'].first.keys
-      expect(fax_keys).to include('department')
-    end
-
     it 'returns nil fields within Phones' do
       @loc.phones.create!(attributes_for(:phone_with_missing_fields))
       get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
@@ -278,16 +213,6 @@ describe 'GET /locations' do
       get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
       org_keys = json.first['organization'].keys
       expect(org_keys).to include('urls')
-    end
-
-    xit 'returns nil fields within Services' do
-      attrs = attributes_for(:service)
-      @loc.services.create!(attrs)
-      get api_locations_url(subdomain: ENV['API_SUBDOMAIN'])
-      service_keys = json.first['services'].first.keys
-      %w(audience eligibility fees).each do |key|
-        expect(service_keys).to include(key)
-      end
     end
   end
 

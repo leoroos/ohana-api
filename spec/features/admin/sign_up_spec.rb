@@ -2,10 +2,9 @@ require 'rails_helper'
 
 feature 'Signing up' do
   scenario 'with all required fields present and valid' do
-    skip "Broken"
     sign_up_admin('Moncef', 'moncef@foo.com', 'ohanatest', 'ohanatest')
     expect(page).to have_content 'activate your account'
-    expect(current_path).to eq(admin_dashboard_path)
+    expect(current_path).to eq(new_admin_confirmation_path)
   end
 
   scenario 'with name missing' do

@@ -5,9 +5,12 @@ module Api
       include CustomErrors
 
       def index
-        locations = Location.text_search(params).uniq.page(params[:page]).
-                            per(params[:per_page]).
-                            includes(:organization, :address, :phones)
+        locations = Location.
+          text_search(params).
+          uniq.
+          page(params[:page]).
+          per(params[:per_page]).
+          includes(:organization, :address, :phones)
 
         render json: locations, each_serializer: LocationsSerializer, status: 200
         generate_pagination_headers(locations)

@@ -1,4 +1,8 @@
 class Location < ActiveRecord::Base
+  EMAIL_REGEX = /\A([^@\s]+)@((?:(?!-)[-a-z0-9]+(?<!-)\.)+[a-z]{2,})\z/i
+  URL_REGEX = %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i
+
+  include Search
   include ValidationState
 
   attr_accessible :accessibility, :address, :admin_emails, :contacts,
@@ -57,31 +61,21 @@ class Location < ActiveRecord::Base
   validates :description, :organization, :name,
             presence: { message: "can't be blank for Location" }
 
-  ## Uncomment the line below if you want to require a short description.
-  ## We recommend having a short description so that web clients can display
-  ## an overview within the search results. See smc-connect.org as an example.
-  # validates :short_desc, presence: { message: "can't be blank for Location" }
-
-  ## Uncomment the line below if you want to limit the
-  ## short description's length. If you want to display a short description
-  ## on a front-end client like smc-connect.org, we recommmend writing or
-  ## re-writing a description that's one to two sentences long, with a
-  ## maximum of 200 characters. This is just a recommendation though.
-  ## Feel free to modify the maximum below, and the way the description is
-  ## displayed in the ohana-web-search client to suit your needs.
-  # validates :short_desc, length: { maximum: 200 }
-
-  # Custom validation for values within arrays.
-  # For example, the urls field is an array that can contain multiple URLs.
-  # To be able to validate each URL in the array, we have to use a
-  # custom array validator. See app/validators/array_validator.rb
   validates :urls, array: {
-    format: { with: %r{\Ahttps?://([^\s:@]+:[^\s:@]*@)?[A-Za-z\d\-]+(\.[A-Za-z\d\-]+)+\.?(:\d{1,5})?([\/?]\S*)?\z}i,
-              message: '%{value} is not a valid URL', allow_blank: true } }
+    format: {
+      allow_blank: true,
+      message: "%{value} is not a valid URL",
+      with: URL_REGEX,
+    }
+  }
 
   validates :emails, :admin_emails, array: {
-    format: { with: /\A([^@\s]+)@((?:(?!-)[-a-z0-9]+(?<!-)\.)+[a-z]{2,})\z/i,
-              message: '%{value} is not a valid email', allow_blank: true } }
+    format: {
+      allow_blank: true,
+      message: "%{value} is not a valid email",
+      with: EMAIL_REGEX,
+    }
+  }
 
   # Only call Google's geocoding service if the address has changed
   # to avoid unnecessary requests that affect our rate limit.
@@ -101,19 +95,9 @@ class Location < ActiveRecord::Base
             multiple: true,
             scope: true
 
-  # List of admin emails that should have access to edit a location's info.
-  # Admin emails can be added to a location via the Admin GUI:
-  # https://github.com/codeforamerica/ohana-api-admin
   serialize :admin_emails, Array
-
   serialize :emails, Array
-
   serialize :languages, Array
-  # enumerize :languages, in: [:arabic, :cantonese, :french, :german,
-  #   :mandarin, :polish, :portuguese, :russian, :spanish, :tagalog, :urdu,
-  #   :vietnamese,
-  #    ], multiple: true, scope: true
-
   serialize :urls, Array
 
   auto_strip_attributes :description, :hours, :name, :short_desc,
@@ -160,7 +144,4 @@ class Location < ActiveRecord::Base
   def needs_geocoding?
     address.changed? || latitude.nil? || longitude.nil? if address.present?
   end
-
-  # See app/models/concerns/search.rb
-  include Search
 end

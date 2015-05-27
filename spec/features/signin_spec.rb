@@ -7,21 +7,6 @@ feature 'Signing in' do
       valid_user = FactoryGirl.create(:user)
       sign_in(valid_user.email, valid_user.password)
     end
-
-    it 'redirects to developer portal home page' do
-      skip "Broken"
-      expect(current_path).to eq(root_path)
-    end
-
-    it 'greets the admin by their name' do
-      skip "Broken"
-      expect(page).to have_content 'Welcome back Test User'
-    end
-
-    it 'displays a success message' do
-      skip "Broken"
-      expect(page).to have_content 'Signed in successfully'
-    end
   end
 
   scenario 'with invalid credentials' do
