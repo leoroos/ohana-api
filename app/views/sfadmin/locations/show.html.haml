@@ -28,23 +28,20 @@
           = render partial: 'sfadmin/addresses/address', locals: { address: @location.address }
       %dt= Location.human_attribute_name :contacts
       %dd
-        %ul
-          - @location.contacts.each do |contact|
-            %li= render partial: 'sfadmin/contacts/contact', locals: { contact: contact }
+        - @location.contacts.each do |contact|
+          = render partial: 'sfadmin/contacts/contact', locals: { contact: contact }
       %dt= Location.human_attribute_name :faxes
       %dd
-        %ul
-          - @location.faxes.each do |fax|
-            %li= render partial: 'sfadmin/faxes/fax', locals: { fax: fax }
+        - @location.faxes.each do |fax|
+          = render partial: 'sfadmin/faxes/fax', locals: { fax: fax }
       %dt= Location.human_attribute_name :mail_address
       %dd
-        - if @location.mail_address
-          = render partial: 'sfadmin/mail_addresses/mail_address', locals: { mail_address: @location.mail_address }
+      - if @location.mail_address
+        = render partial: 'sfadmin/mail_addresses/mail_address', locals: { mail_address: @location.mail_address }
       %dt= Location.human_attribute_name :phones
       %dd
-        %ul
-          - @location.phones.each do |phone|
-            %li= render partial: 'sfadmin/phones/phone', locals: { phone: phone }
+        - @location.phones.each do |phone|
+          = render partial: 'sfadmin/phones/phone', locals: { phone: phone }
 
       - @location.services.each do |service|
         = service.name

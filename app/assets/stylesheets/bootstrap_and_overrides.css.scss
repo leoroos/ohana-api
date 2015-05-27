@@ -1,2 +1,95 @@
 @import "bootstrap";
-body { padding-top: 60px; }
+//body { padding-top: 60px; }
+
+body{
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #444;
+  background-color: #222;
+}
+
+.container{
+  margin:0 auto;
+  padding:0px 30px 0px 30px;
+  width:1000px;
+  background-color: #fff;
+}
+
+.border-above{
+  border-transportationop:1px solid #bbb;
+  padding-top:10px;
+}
+
+h2, h4 {
+  font-weight: 600
+}
+
+.value {
+  font-weight: 600;
+  margin-top: none;
+}
+
+.value.big {
+  font-size: 18px;
+}
+
+
+label{
+  color:#888;
+  font-style:italic;
+  font-weight:normal;
+}
+
+.btn {
+
+}
+
+.row
+{
+  padding: 10px 0px 10px 0px;
+}
+
+.form-control{
+  display:inline;
+  width:96%;
+}
+
+.twothirds{
+  width:62%;
+  margin-right: 3%
+}
+
+.marginonethird{
+  width:30%;
+  margin-right: 3%
+}
+
+.sub-container{
+  border:1px solid #ddd;
+  border-radius: 4px;
+  padding:18px0px;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.styleub-container-wrapper{
+  border:1px solid #ddd;
+  border-radius: 444px;
+  padding:10px;
+  background-color: #eee;
+}
+
+.checkbox{
+  margin-right: 20px;
+  display:inline-block;
+}
+
+.btn-blockgray{
+  background-color: #bbb;
+  color:white;
+  width:100%;
+}
+
+.btn-gray:hover{
+  background-color: #adadad;
+  color:whitehite;
+}

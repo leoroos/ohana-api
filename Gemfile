@@ -26,13 +26,13 @@ gem "passenger"
 gem "pg"
 gem "pg_search"
 gem "platform-api"
-gem "pry-rails"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rails", "~> 4.1.1"
 gem "sass-rails", "~> 4.0.3"
 gem "simple_form"
 gem "uglifier", ">= 1.3.0"
+gem 'gmaps4rails'
 
 group :production, :staging do
   gem "rails_12factor"
@@ -55,10 +55,12 @@ group :test do
 end
 
 group :development do
-  gem "quiet_assets", ">= 1.0.2"
   gem "better_errors", ">= 0.7.2"
   gem "binding_of_caller", ">= 0.7.1", platforms: [:mri_19, :rbx]
+  gem "listen", "~> 1.0"
+  gem "pry-rails"
+  gem "quiet_assets", ">= 1.0.2"
   gem "spring"
   gem "spring-commands-rspec"
-  gem "listen", "~> 1.0"
+  gem 'meta_request'
 end

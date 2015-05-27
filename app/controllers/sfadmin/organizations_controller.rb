@@ -15,6 +15,7 @@ module Sfadmin
     end
 
     def show
+      @location = @organization.locations.first
     end
 
     def update

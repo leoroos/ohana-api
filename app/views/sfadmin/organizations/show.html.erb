@@ -1,22 +1,286 @@
 <% content_for :title, @organization.name %>
 
-<div class="outer-container">
-  <%= render 'organization_sidebar', organization: @organization %>
+    <div class="outer-container">
+        <%#= render 'organization_sidebar', organization: @organization %>
 
-  <%#This page just shows the top-level organization fields %>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md8">
+                        <!-- Edititor information // populated directly from database -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div classss="row">
+                                    <h2 class="border-above"><%= @organization.name %><button class="btn btn-primary">Edit</button></h2>
+                                    <div class="form-group">
+                                        <labell>URLs</label>
+                                            <p class="value big">http://www.website.com</p>http
+                                            <input type="url" class="form-control" id="organizationURL" paramslaceholder="Add URL"><a class="btn btn-primary">Save URL</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Organizationzation URL(s) // allows 0 to n responses-->
+                                <div class="row">
+                                    <div class="row">
+                                        <label>Last Edited</labelel>
+                                            <p class="value"><%=l @organization.updated_at %></p>
+                                    </div>
+                                    <div class="row">
+                                        <label>Editors</label>
+                                        <p class="valuesue">Joe Schmo, Jane Schmane</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-  <div class="organization-form">
-    <dt>Last Updated</dt>
-    <dd><%= l @organization.updated_at %></dd>
+                <!-- Programs // allows 0 to n responses // multiple fields -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="">
+                            <!-- Programsgrams // existing block-->
+                            <div class="">
+                                <div class="row">
+                                    <label>Locations</label>
+                                    <div class="panel panel-default">
+                                        <!-- List group -->
+                                        <ul class="list-group">
+                                            <% @organization.locations.each do |location| %>
+                                                <li class="list-group-item">
+                                                    <a>
+                                                        <%= location.name %>
+                                                    </a>
+                                                </li>
+                                                <% end %>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label>Services</label>
+                                    <div class="panel panel-default">
+                                        <!-- List group -->
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><a>Service Name One</a>
+                                            </li>
+                                            <li class="list-group-item"><a>Service Name Two</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Programs // create new empty block-->
+                            <button class="btn btn-gray btn-add-new">+ Add New Programam</button>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-1 well">
+                        <div class="row">
+                            <div class="col-md-4 panel panel-default">
+                                <p class="value big">Map goes here</p>
+                            </div>
+                            <div class="col-md-8 panel panel-default">
+                                <label>Name</label>
+                                <p class="value big">The Riley Center</p>
+                                <br>
+                                <label>Address</label>
+                                <address>
+                                  <%= @location.address.street %><br>
+                                  <%= @location.address.city %>, <%= @location.address.state %> <%= @location.address.zip %><br>
+                                </address>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Latitude</label>
+                                        <p class="value">37.7485824</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Longitude</label>
+                                        <p class="Womenvalue"> -122.4184108</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Description-->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <a class="btn btn-primaryary" style="float:right;">Edit</a>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <label>Short Description</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body"><%= @location.short_desc %>...</div>
+                                            </div>
+                                            <label>Full Description</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body"><%= @location.description %></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <h4 class="">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#section1" aria-expanded="true" aria-controls="section1">
+                                  Hours & Transportation
+                                </a>
+                              </h4>
+                              <div class="panel panel-default">
+                                <div id="section1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <label>Hours</label>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <%= @location.hours %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel-body">
+                                        <label>Transportation</label>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <%= @location.transportation %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <h4 class="">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#section2" aria-expanded="true" aria-controls="section2">
+                                     Websites, Emails, Phones, Faxes, Mail
+                                    </a>
+                                </h4>
+                                <div class="panel panel-default">
+                                    <div id="section2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <label>Website URLs</label>
+                                            <ul class="list-group">
+                                                <% @location.urls.each do |url| %>
+                                                    <li class="list-group-item">
+                                                        <%= url %>
+                                                    </li>
+                                                <% end %>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <label>Mailing Address</label>
+                                            <ul class="list-group">
+                                              <li class="list-group-item">
+                                                  <dl>
+                                                  <dt><%= Address.human_attribute_name(:street) %></dt>
+                                                  <dd><%= @location.address.street %></dd>
+                                                  <dt><%= Address.human_attribute_name(:city) %></dt>
+                                                  <dd><%= @location.address.city %></dd>
+                                                  <dt><%= Address.human_attribute_name(:state) %></dt>
+                                                  <dd><%= @location.address.state %></dd>
+                                                  <dt><%= Address.human_attribute_name(:zip) %></dt>
+                                                  <dd><%= @location.address.zip %></dd>
+                                                  </dl>
+                                              </li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <label>Phone Numbers</label>
+                                            <ul class="list-group">
+                                                <% @location.phones.each do |phone| %>
+                                                    <li class="list-group-item">
+                                                        <dl>
+                                                          <dt><%= Phone.human_attribute_name(:number_type) %></dt>
+                                                          <dd><%= phone.number_type %></dd>
+                                                          <dt><%= Phone.human_attribute_name(:vanity_number) %></dt>
+                                                          <dd><%= phone.vanity_number %></dd>
+                                                          <dt><%= Phone.human_attribute_name(:number) %></dt>
+                                                          <dd><%= phone.number %></dd>
+                                                          <dt><%= Phone.human_attribute_name(:extension) %></dt>
+                                                          <dd><%= phone.extension %></dd>
+                                                          <dt><%= Phone.human_attribute_name(:department) %></dt>
+                                                          <dd><%= phone.department %></dd>
+                                                        </dl>
+                                                    </li>
+                                                <% end %>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <label>Fax Numbers</label>
+                                            <ul class="list-group">
+                                                <% @location.faxes.each do |fax| %>
+                                                    <li class="list-group-item">
+                                                        <dl>
+                                                            <dt>Department</dt>
+                                                            <dd><%= fax.department %></dd>
+                                                            <dt>Number</dt>
+                                                            <dd><%= fax.number %></dd>
+                                                        </dl>
+                                                    </li>
+                                                <% end %>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-body">
+                                            <label>Email Addresses</label>
+											<ul class="list-group">
+                                                <% @location.emails.each do |email| %>
+                                                    <li class="list-group-item">
+                                                        <%= email %>
+                                                    </li>
+                                                <% end %>
+                                            </ul>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <h4 class="">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#section3" aria-expanded="true" aria-controls="section3">
+                                  Contacts
+                                </a>
+                              </h4>
+                              <div class="panel panel-default">
+                                <div id="section3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <ul class="list-group">
+                                            <% @location.contacts.each do |contact| %>
+                                                <li class="list-group-item">
+                                                    <dl>
+                                                      <dt><%= Contact.human_attribute_name(:name) %></dt>
+                                                      <dd><%= contact.name %></dd>
+                                                      <dt><%= Contact.human_attribute_name(:title) %></dt>
+                                                      <dd><%= contact.title %></dd>
+                                                      <dt><%= Contact.human_attribute_name(:email) %></dt>
+                                                      <dd><%= contact.email %></dd>
+                                                      <dt><%= Contact.human_attribute_name(:fax) %></dt>
+                                                      <dd><%= contact.fax %></dd>
+                                                      <dt><%= Contact.human_attribute_name(:phone) %></dt>
+                                                      <dd><%= contact.phone %></dd>
+                                                      <dt><%= Contact.human_attribute_name(:extension) %></dt>
+                                                      <dd><%= contact.extension %></dd>
+                                                    </dl>
+                                                </li>
+                                            <% end %>
+                                        </ul>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
-    <%= simple_form_for([:sfadmin, @organization]) do |form| %>
-      <%= aasm_validation_errors_for(@organization) %>
 
-      <h1>Edit "<%= @organization.name %>"</h1>
+    <%#This page just shows the top-level organization fields %>
 
-      <%= form.input :name %>
-      <%= form.input :urls, as: :array %>
-      <%= form.submit %>
-    <% end %>
-  </div>
-</div>
+        <div class="organization-form">
+            <%=simple_form_for([:sfadmin, @organization]) do |form| %>
+                <%=aasm_validation_errors_for(@organization) %>
+
+                    <h1>Edit "<%= @organization.name %>"</h1>
+
+                    <%=form.input :name %>
+                        <%=form.input :urls, as: :array %>
+                            <%=form.submit %>
+                                <% end %>
+        </div>
+        </div>
