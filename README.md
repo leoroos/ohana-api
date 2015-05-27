@@ -1,6 +1,6 @@
 #Ohana API
 
-[![Build Status](https://travis-ci.org/codeforamerica/ohana-api.png?branch=master)](https://travis-ci.org/codeforamerica/ohana-api)
+[![Build Status](https://circleci.com/gh/sfbrigade/ohana-api.svg?style=svg)](https://circleci.com/gh/sfbrigade/ohana-api)
 
 This is the API + Admin Interface portion of the [Ohana API] project,
 an open source community resource platform developed by [@monfresh],
