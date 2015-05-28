@@ -11,7 +11,7 @@ feature "Uploading data" do
     login_admin
     visit "/"
     click_on "New Import Job"
-    fill_in "Source Data URL", with: data_url
+    fill_in "import_job_url", with: data_url
     click_on "Create Import job"
 
     expect(page).to have_content("30th Street Senior Center")
