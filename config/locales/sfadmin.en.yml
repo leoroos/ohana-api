@@ -4,12 +4,12 @@ en:
   record_pending: Submitted
   record_approved: Approved
   record_rejected: Rejected
-  
+
   finished_job: Finished
   deleted_job: Deleted
   new_job: New
   started_job: Started
-  
+
   activerecord:
     attributes:
       import_job:
@@ -21,22 +21,31 @@ en:
         urls: URLs
         aasm_state: Validation State
         aasm_state_notes: Notes
-  
+
   layouts:
     application:
       name: San Francisco Open Referral Database
       toggle_navigation: Toggle navigation
       search_placeholder: Search...
       dashboard: Dashboard
+  shared:
+    navigation:
       browse: Browse
       import: Import Data
       sign_out: Sign out
-    
+
   sfadmin:
     import_jobs:
       index:
         title: Import Data
+        new_import_job: New Import Job
       show:
         delete: Delete all imported records
         confirm_delete: Are you sure you wish to delete all the imported records from this job?
-      
+    organizations:
+      index:
+        all: All
+        status: Status
+        name: Name
+        actions: Actions
+        view: View

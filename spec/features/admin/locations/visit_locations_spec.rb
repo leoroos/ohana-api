@@ -16,13 +16,13 @@ feature 'Locations page' do
     end
 
     it 'does not include a link to the Home page in the navigation' do
-      within '.navbar' do
+      within '.navigation' do
         expect(page).not_to have_link 'Home', href: root_path
       end
     end
 
     it 'does not include a link to Your locations in the navigation' do
-      within '.navbar' do
+      within '.navigation' do
         expect(page).not_to have_link 'Your locations', href: admin_locations_path
       end
     end

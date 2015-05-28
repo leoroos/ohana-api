@@ -14,13 +14,13 @@ feature "Visiting the Sign in page" do
   end
 
   it "does not include a link to the Docs page in the navigation" do
-    within ".navbar" do
+    within ".navigation" do
       expect(page).not_to have_link "Docs", href: docs_path
     end
   end
 
   it "does not include a link to the Home page in the navigation" do
-    within ".navbar" do
+    within ".navigation" do
       expect(page).not_to have_link "Home", href: root_path
     end
   end
