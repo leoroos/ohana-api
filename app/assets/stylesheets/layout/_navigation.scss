@@ -1,0 +1,22 @@
+.navigation {
+  width: 100%;
+  background-color: black;
+  padding: 1em;
+
+  a {
+    color: white;
+  }
+
+  &-header {
+    @include span-columns(6 of 12);
+  }
+
+  &-links {
+    @include span-columns(6 of 12);
+  }
+
+  &-link {
+    @include span-columns(2 of 6);
+    text-align: right;
+  }
+}

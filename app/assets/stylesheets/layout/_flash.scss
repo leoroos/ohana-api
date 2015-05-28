@@ -1,0 +1,20 @@
+.flash {
+  padding: $base-spacing/2;
+  margin-bottom: $base-spacing;
+
+  &-alert {
+    background-color: $alert-color;
+  }
+
+  &-error {
+    background-color: $error-color;
+  }
+
+  &-notice {
+    background-color: $notice-color;
+  }
+
+  &-success {
+    background-color: $success-color;
+  }
+}

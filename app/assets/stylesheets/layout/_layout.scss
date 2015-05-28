@@ -1,0 +1,7 @@
+@import "reset";
+@import "navigation";
+@import "flash";
+
+.content {
+  @include outer-container;
+}
