@@ -17,13 +17,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    return root_url if resource.is_a?(User)
-    return sfadmin_root_path if resource.is_a?(Admin)
+    sfadmin_root_path
   end
-    
+
   def after_sign_out_path_for(resource)
-    return root_path if resource == :user
-    return sfadmin_root_path if resource == :admin
+    sfadmin_root_path
   end
 
   private
@@ -53,5 +51,4 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
   end
-
 end

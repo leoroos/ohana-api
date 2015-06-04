@@ -13,12 +13,6 @@ feature "Visiting the Sign in page" do
     expect(page).to have_link "Sign up", href: new_admin_registration_path
   end
 
-  it "does not include a link to the Docs page in the navigation" do
-    within ".navigation" do
-      expect(page).not_to have_link "Docs", href: docs_path
-    end
-  end
-
   it "does not include a link to the Home page in the navigation" do
     within ".navigation" do
       expect(page).not_to have_link "Home", href: root_path
